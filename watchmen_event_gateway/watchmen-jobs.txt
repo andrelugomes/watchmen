@@ -1,7 +1,7 @@
 {
 	"app":{
-		"name":"ArtGallery",
-		"rootcontext":"artgallery"
+		"name":"Watchmen",
+		"rootcontext":"watchmen"
 	},
 	"watch":{
 		"service":{

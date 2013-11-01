@@ -1,15 +1,15 @@
 <cfcomponent name="Watchmen" output="false" extends="Jobs">
-	<cffunction name="onAdd" output="no">
+	<cffunction name="onAdd" output="false">
 		<cfargument name="CFEvent" type="struct" required="yes" />
 		<cfset watchmenJobRunner(CFEvent.data)>
 	</cffunction>
 	
-	<cffunction name="onDelete" output="no">
+	<cffunction name="onDelete" output="false">
 		<cfargument name="CFEvent" type="struct" required="yes" />
 		<cfset watchmenJobRunner(CFEvent.data)>
 	</cffunction>
 	
-	<cffunction name="onChange" output="no">
+	<cffunction name="onChange" output="false">
 		<cfargument name="CFEvent" type="struct" required="yes" />
 		<cfset watchmenJobRunner(CFEvent.data)>
 	</cffunction>

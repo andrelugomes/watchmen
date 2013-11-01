@@ -2,7 +2,7 @@
 component output="false"
 {
     //APP
-    this.name = "ArtGallery";
+    this.name = "Watchmen";
     this.applicationTimeout = createTimespan(0,2,0,0);
     this.datasource = "cfartgallery";
     //ORM
