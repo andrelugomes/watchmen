@@ -18,7 +18,8 @@ component output="false"
     {
     	application.restservicemapping = this.name;
     	application.rootcontext = getDirectoryFromPath(getCurrentTemplatePath());
-        restInitApplication(application.rootcontext, application.restservicemapping);
+    	
+        //restInitApplication(application.rootcontext, application.restservicemapping);
         ORMreload(); 
         return true;
     } 

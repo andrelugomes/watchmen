@@ -14,36 +14,47 @@
 		<cfset watchmenJobRunner(CFEvent.data)>
 	</cffunction>
 	
-	<cffunction name="watchmenJobRunner" output="false" access="private">
+	<cffunction name="watchmenJobRunner" output="false" access="private" returntype="any">
 		<cfargument name="data" type="struct" required="yes" />
 		<cftry>
-			<cfset runJobs(data)>
+			<cfreturn runJobs(data)>
 			<cfcatch>
-				<cflog file="Watchmen" application="No" text="ERROR:#cfcatch.message#; #cfcatch.detail#">
+				<cflog file="Watchmen-Error" application="No" text="ERROR:#cfcatch.message#; #cfcatch.detail#">
 			</cfcatch>
 		</cftry>
 	</cffunction>
-	<cffunction name="runJobs" output="false" access="private">
+	
+	<cffunction name="runJobs" output="false" access="private" returntype="any">
 		<cfargument name="data" type="struct" required="yes" />
 		<cftry>
-			<cffile action="read" file="#getDirectoryFromPath(getCurrentTemplatePath())#watchmen-jobs.txt" charset="utf-8" variable="jobs">
-			<cfset jobs = deserializeJSON(jobs)>
-			<cfset app = jobs.app.name>
-			<cfset rootContext = jobs.app.rootContext>
-			<cfset dirindex = listFindNoCase(data.filename,rootcontext,'\')>
-			<cfset dirchanged = listGetAt(data.filename,dirindex+1,'\')>
-			<cfset dirList = StructKeyList(jobs.watch)>
+			<cfset running = structNew()>
+			<cfset running.jobs = readConfigFile()>
+			<cfset running.app = running.jobs.app.name>
+			<cfset running.rootContext = running.jobs.app.rootContext>
+			<cfset running.dirindex = listFindNoCase(arguments.data.filename,running.rootcontext,'\')>
+			<cfset running.dirchanged = listGetAt(arguments.data.filename,running.dirindex+1,'\')>
+			<cfset running.dirList = StructKeyList(running.jobs.watch)>
+			<cfset running.data = arguments.data>
 			
-			<cfif listFind(dirList,dirchanged)>
-				
-				
-				
+			<cfif listFind(running.dirList,running.dirchanged)>
+				<cflog file="Watchmen-#running.app#" application="No" text="DATA :#serializeJSON(running)#">
+				<cfreturn serializeJSON(running)>
 			<cfelse>
-				<cflog file="Watchmen-#app#" application="No" text=" NO WATCHING : #dirchanged#">
+				<cflog file="Watchmen-#running.app#" application="No" text=" NO WATCHING : #running.dirchanged#">
+				<cfreturn serializeJSON(running)>
 			</cfif>
 			<cfcatch>
-				<cflog file="Watchmen-#app#" application="No" text=" ERROR: #cfcatch.message#|#cfcatch.detail#">
+				<cflog file="Watchmen-Error" application="No" text=" ERROR: #cfcatch.message#;#cfcatch.detail#">
 			</cfcatch>
 		</cftry>				
-	</cffunction>
+	</cffunction>	
+	<cffunction name="readConfigFile" output="false" access="private" returntype="any">
+		<cftry>
+			<cffile action="read" file="#getDirectoryFromPath(getCurrentTemplatePath())#watchmen-jobs.txt" charset="utf-8" variable="jobs">
+			<cfreturn deserializeJSON(jobs)>
+			<cfcatch>
+				<cfthrow errorcode="500" type="Application" detail="Erro ao ler o arquivo de configuração de JOBs: watchmen-jobs.txt" message="Erro ao ler o arquivo de configuração de JOBs: watchmen-jobs.txt">
+			</cfcatch>
+		</cftry>				
+	</cffunction>	
 </cfcomponent>

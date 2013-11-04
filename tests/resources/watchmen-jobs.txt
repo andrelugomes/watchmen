@@ -1,0 +1,19 @@
+{
+	"app":{
+		"name":"Watchmen",
+		"rootcontext":"watchmen"
+	},
+	"watch":{
+		"watchmen_event_gateway":{
+			"onChange":{
+				"jobs":"resetRestApplication"
+			},
+			"onAdd":{
+				"jobs":"resetRestApplication"
+			},
+			"onDelete":{
+				"jobs":"resetRestApplication"
+			}
+		}
+	}
+}
