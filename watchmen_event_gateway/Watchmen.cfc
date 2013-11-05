@@ -20,6 +20,7 @@
 			<cfreturn runJobs(data)>
 			<cfcatch>
 				<cflog file="Watchmen-Error" application="No" text="ERROR:#cfcatch.message#; #cfcatch.detail#">
+				<cfreturn serializeJSON(cfcatch)>
 			</cfcatch>
 		</cftry>
 	</cffunction>
@@ -45,6 +46,7 @@
 			</cfif>
 			<cfcatch>
 				<cflog file="Watchmen-Error" application="No" text=" ERROR: #cfcatch.message#;#cfcatch.detail#">
+				<cfreturn serializeJSON(cfcatch)>
 			</cfcatch>
 		</cftry>				
 	</cffunction>	
