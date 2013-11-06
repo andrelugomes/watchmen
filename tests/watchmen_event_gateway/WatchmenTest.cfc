@@ -6,8 +6,20 @@
 			injectmethod(Watchmen,this,"mockReadConfigFile","readConfigFile");
 			var data = mockCFEventData();
 			var running = Watchmen.watchmenJobRunner(data);	
-			var mock = 	serializejson(mockResultRunnig());	
-			assertEquals(mock,running,"RESULTS ARE DIFERENTS");
+			var mock = 	mockResultRunnig();	
+			assertEquals(mock.app,deserializejson(running).app,"RESULTS ARE DIFERENTS");
+		</cfscript> 
+	</cffunction>
+	
+	<cffunction name="testJobsAreStructs" access="public" returnType="void">
+		<cfscript>
+			makepublic(Watchmen,"watchmenJobRunner");
+			makepublic(Watchmen,"readConfigFile");
+			injectmethod(Watchmen,this,"mockReadConfigFile","readConfigFile");
+			var data = mockCFEventData();
+			var running = Watchmen.watchmenJobRunner(data);	
+			var mock = 	mockResultRunnig();	
+			assertEquals(mock.jobs,deserializejson(running).jobs,"NOT STRUCTUS");
 		</cfscript> 
 	</cffunction>
 
@@ -32,7 +44,7 @@
 	</cffunction>
 
 	<cffunction name="mockResultRunnig" returntype="struct" access="private">
-		<cfreturn deserializeJSON("{""APP"":""Watchmen"",""JOBS"":{""app"":{""name"":""Watchmen"",""rootcontext"":""watchmen""},""watch"":{""watchmen_event_gateway"":{""onChange"":{""jobs"":""resetRestApplication""},""onAdd"":{""jobs"":""resetRestApplication""},""onDelete"":{""jobs"":""resetRestApplication""}}}},""DIRINDEX"":5,""DIRLIST"":""model,service,watchmen_event_gateway,controller"",""ROOTCONTEXT"":""watchmen"",""DATA"":{""LASTMODIFIED"":""Novembro, 04 2013 13:24:17"",""FILENAME"":""C:\\ColdFusion10\\cfusion\\wwwroot\\watchmen\\watchmen_event_gateway\\Watchmen.cfc"",""TYPE"":""CHANGE""},""DIRCHANGED"":""watchmen_event_gateway""}") />
+		<cfreturn deserializeJSON("{""app"":""Watchmen"",""jobs"":{""app"":{""name"":""watchmen"",""rootcontext"":""watchmen""},""watch"":{""watchmen_event_gateway"":{""onchange"":{""jobs"":""resetrestapplication""},""onadd"":{""jobs"":""resetrestapplication""},""ondelete"":{""jobs"":""resetrestapplication""}}}},""dirindex"":5,""dirlist"":""watchmen_event_gateway"",""rootcontext"":""watchmen"",""data"":{""lastmodified"":""novembro, 04 2013 11:39:26"",""filename"":""c:\\coldfusion10\\cfusion\\wwwroot\\watchmen\\watchmen_event_gateway\\watchmen.cfc"",""type"":""change""},""dirchanged"":""watchmen_event_gateway""}") />
 	</cffunction>
 
 	<cffunction name="mockReadConfigFile" returntype="struct" access="private">
