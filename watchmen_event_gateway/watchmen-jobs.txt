@@ -5,46 +5,46 @@
 	},
 	"watch":{
 		"service":{
-			"onChange":{
+			"CHANGE":{
 				"jobs":"resetRestApplication,resetApplication,resetORM,runUnitTests,SyncFTP"
 			},
-			"onAdd":{
+			"ADD":{
 				"jobs":"resetRestApplication,resetApplication,resetORM,runUnitTests,SyncFTP"
 			},
-			"onDelete":{
+			"DELETE":{
 				"jobs":"resetRestApplication,resetApplication,resetORM,runUnitTests,SyncFTP"
 			}
 		},
 		"model":{
-			"onChange":{
+			"CHANGE":{
 				"jobs":"resetRestApplication,resetApplication,resetORM,runUnitTests,SyncFTP"
 			},
-			"onAdd":{
+			"ADD":{
 				"jobs":"resetRestApplication,resetApplication,resetORM,runUnitTests,SyncFTP"
 			},
-			"onDelete":{
+			"DELETE":{
 				"jobs":"resetApplication,resetORM,runUnitTests"
 			}
 		},
 		"controller":{
-			"onChange":{
+			"CHANGE":{
 				"jobs":"resetRestApplication"
 			},
-			"onAdd":{
+			"ADD":{
 				"jobs":"resetORM,runUnitTests"
 			},
-			"onDelete":{
+			"DELETE":{
 				"jobs":"resetApplication,resetORM,runUnitTests"
 			}
 		},
 		"watchmen_event_gateway":{
-			"onChange":{
+			"CHANGE":{
+				"jobs":"resetRestApplication,resetApplication,resetORM"
+			},
+			"ADD":{
 				"jobs":"resetRestApplication"
 			},
-			"onAdd":{
-				"jobs":"resetRestApplication"
-			},
-			"onDelete":{
+			"DELETE":{
 				"jobs":"resetRestApplication"
 			}
 		}

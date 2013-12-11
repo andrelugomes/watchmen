@@ -5,8 +5,6 @@
  
         <cfif findNoCase("TestManager.Retail",GetMetadata(TestCase).name)>
             <cfinclude template="retail/Application.cfm">
-        <cfelse>
-            <!--- <cfinclude template="/watchmen/Application.cfc"> --->
         </cfif>
     </cffunction> 
 </cfcomponent>

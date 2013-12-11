@@ -5,13 +5,13 @@
 	},
 	"watch":{
 		"watchmen_event_gateway":{
-			"onChange":{
+			"CHANGE":{
 				"jobs":"resetRestApplication"
 			},
-			"onAdd":{
+			"ADD":{
 				"jobs":"resetRestApplication"
 			},
-			"onDelete":{
+			"DELETE":{
 				"jobs":"resetRestApplication"
 			}
 		}

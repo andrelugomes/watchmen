@@ -37,9 +37,11 @@
 			<cfset running.dirList = StructKeyList(running.jobs.watch)>
 			<cfset running.data = arguments.data>
 			
-			<cfif listFind(running.dirList,running.dirchanged)>
+ 			<cfif listFind(running.dirList,running.dirchanged)>
 				<cflog file="Watchmen-#running.app#" application="No" text="DATA :#serializeJSON(running)#">
-				<cfreturn serializeJSON(running)>
+				<cfset jobs = evaluate("running.jobs.watch.#running.dirchanged#.#running.data.TYPE#.jobs")>
+				<cfset taskRunner(jobs)>
+				<cfreturn serializeJSON(running)> 
 			<cfelse>
 				<cflog file="Watchmen-#running.app#" application="No" text=" NO WATCHING : #running.dirchanged#">
 				<cfreturn serializeJSON(running)>
@@ -49,7 +51,18 @@
 				<cfreturn serializeJSON(cfcatch)>
 			</cfcatch>
 		</cftry>				
-	</cffunction>	
+	</cffunction>
+	
+	<cffunction name="taskRunner" output="false" access="private" returntype="any">
+		<cfargument name="jobs" type="string" required="yes" />
+		<cftry>
+			<cflog file="Watchmen-#running.app#" application="No" text="RUNNING TASKS :#arguments.jobs#">
+			<cfcatch>
+				<cflog file="Watchmen-Error" application="No" text=" ERROR: #cfcatch.message#;#cfcatch.detail#">
+			</cfcatch>
+		</cftry>				
+	</cffunction>
+		
 	<cffunction name="readConfigFile" output="false" access="private" returntype="any">
 		<cftry>
 			<cffile action="read" file="#getDirectoryFromPath(getCurrentTemplatePath())#watchmen-jobs.txt" charset="utf-8" variable="jobs">
