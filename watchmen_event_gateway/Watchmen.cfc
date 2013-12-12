@@ -57,6 +57,9 @@
 		<cfargument name="jobs" type="string" required="yes" />
 		<cftry>
 			<cflog file="Watchmen-#running.app#" application="No" text="RUNNING TASKS :#arguments.jobs#">
+			<cfloop list="arguments.jobs" delimiters="," item="job">
+				<cfset x = #job#>
+			</cfloop>
 			<cfcatch>
 				<cflog file="Watchmen-Error" application="No" text=" ERROR: #cfcatch.message#;#cfcatch.detail#">
 			</cfcatch>
